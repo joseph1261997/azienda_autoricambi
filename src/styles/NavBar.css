@@ -1,0 +1,19 @@
+.active {
+    text-decoration: none;
+    background-color: #1976D2;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.inactive {
+    text-decoration: none;
+    background-color: white;
+    color: #1976D2;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.inactive:hover {
+    background-color: #fafafa;
+}

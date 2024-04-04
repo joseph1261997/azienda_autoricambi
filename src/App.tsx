@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { CssBaseline } from "@mui/material"
+import Layout from "./components/Layout"
+import Home from "./pages/Home"
+import DoveSiamo from "./pages/DoveSiamo"
+import Contatti from "./pages/Contatti"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import ArticleDetail from "./pages/ArticleDetail"
+import NotFound from "./pages/NotFound"
+import './styles/App.css'
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    <Router>
+      <CssBaseline />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='/dove-siamo' element={<DoveSiamo />} />
+          <Route path="/contatti" element={<Contatti />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path="/article-detail/:codice" element={<ArticleDetail />} />
+          <Route path='*' element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Router>
+
+  )
 }
 
-export default App;
+export default App
