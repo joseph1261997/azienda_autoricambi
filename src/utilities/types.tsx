@@ -25,7 +25,12 @@ export interface Product {
     CodiceRaw: string;
     Codice: string;
     Descrizione: string;
-    Prezzo: number;
+    Listino: number,
+    Netto: number,
+    PvendPub: number,
+    PvendPubIva: number,
+    PvendPub2Val: number,
+    PvendPubIva2Val: number,
     Aliq: number;
     Esistenza: number;
 }
@@ -41,7 +46,7 @@ export interface SearchBarProps {
 }
 
 export interface SearchResult {
-    Sucecss: boolean;
+    Sucess: boolean;
     Errors: string[];
     Warnings: string[];
     Infos: string[];
