@@ -1,6 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProductsData, selectInfoSearch, setInfoSearch } from "../redux/productsSlice";
-// import { TableArticlesProps } from "../utilities/types";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Link from "@mui/material/Link";
-import { useNavigate } from "react-router-dom";
 
 const TableArticles: React.FC<{ isClickable: boolean }> = ({ isClickable }) => {
 

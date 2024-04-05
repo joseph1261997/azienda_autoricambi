@@ -27,9 +27,8 @@ const Home: React.FC = () => {
     useEffect(() => {
 
         const fetchData = async () => {
-            console.log("sono dentro fetchData");
+
             try {
-                console.log("sono dentro fetchData DENTRO TRY");
                 setIsLoading(true);
                 const response = await api.get(`/search-articles?field=${field}&indexPage=${infoSearch.IndexPage}&rowsForPage=${infoSearch.RowForPage}`);
                 const responseData = response.data;
@@ -55,7 +54,6 @@ const Home: React.FC = () => {
         isMounted.current = true;
 
         const handleBeforeUnload = () => {
-            console.log('L\'utente ha refreshato la pagina');
             // Metti qui la logica da eseguire quando l'utente fa clic sul pulsante "Indietro"
             isMounted.current = false;
         };
