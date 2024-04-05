@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setData, setResult, setInfoSearch, selectSearchResult, selectInfoSearch } from '../redux/productsSlice';
@@ -23,20 +23,22 @@ const Home: React.FC = () => {
     const infoSearch = useSelector(selectInfoSearch);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    //const isMounted = useRef(false);
+    const isMounted = useRef(false);
     const [field, setField] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
 
         const fetchData = async () => {
+            console.log("sono dentro fetchData");
             try {
+                console.log("sono dentro fetchData DENTRO TRY");
                 setIsLoading(true);
-                const response = await api.get(`/search-positions?field=${field}&indexPage=${infoSearch.IndexPage}&rowsForPage=${infoSearch.RowForPage}`);
+                const response = await api.get(`/search-articles?field=${field}&indexPage=${infoSearch.IndexPage}&rowsForPage=${infoSearch.RowForPage}`);
                 const responseData = response.data;
                 dispatch(setResult(responseData.Result));
 
-                if (result.Sucecss) {
+                if (result.Sucess) {
                     dispatch(setData(responseData.Data));
                     dispatch(setInfoSearch(responseData.InfoSearch));
                 }
@@ -46,43 +48,49 @@ const Home: React.FC = () => {
             } catch (error) {
                 console.error("Error fetching data:", error);
                 setIsLoading(false);
-                dispatch(setResult({ Sucecss: false, Errors: ["Error occurred while fetching data"], Warnings: [], Infos: [] }));
+                dispatch(setResult({ Sucess: false, Errors: ["Error occurred while fetching data"], Warnings: [], Infos: [] }));
             }
         };
 
-        //if (!isMounted.current)
-        fetchData();
-        // }
-        //isMounted.current = true;
-    }, [infoSearch.IndexPage, infoSearch.RowForPage]);
+        if (!isMounted.current) {
+            fetchData();
+        }
+        isMounted.current = true;
+
+        const handleBeforeUnload = () => {
+            console.log('L\'utente ha refreshato la pagina');
+            // Metti qui la logica da eseguire quando l'utente fa clic sul pulsante "Indietro"
+            isMounted.current = false;
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+
+    }, [field, infoSearch.IndexPage, infoSearch.RowForPage]);
 
     const handleSearch = (value: string) => {
-        //isMounted.current = false;
+        isMounted.current = false;
+        console.log("valore di isMounted.current: ",isMounted.current);
         setField(value);
-        dispatch(setInfoSearch({ ...infoSearch, IndexPage: 1 }));
+        dispatch(setInfoSearch({ ...infoSearch, IndexPage: 0 }));
     };
 
     const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
-        //isMounted.current = false;
+        isMounted.current = false;
         console.log(event);
         dispatch(setInfoSearch({ ...infoSearch, IndexPage: newPage - 1 }));
     };
 
     const handleChangeRowsPerPage = (event: SelectChangeEvent<number>) => {
-        //isMounted.current = false;
+        isMounted.current = false;
         const rowforpage = event.target.value;
         const firstProductIdx = (infoSearch.IndexPage) * infoSearch.RowForPage + 1; // Calcola l'indice del primo articolo visualizzato
         const newPage = Math.floor(firstProductIdx / +rowforpage); // Calcola la nuova pagina in base al nuovo numero di articoli per pagina
         dispatch(setInfoSearch({ ...infoSearch, IndexPage: newPage, RowForPage: +rowforpage }));
     };
-
-    function handleClick(product: Product): void {
-        navigate(`/article-detail/${product.Codice}`, {
-            state: {
-                product: product
-            }
-        });
-    }
 
     return (
         <CssBaseline>
@@ -91,7 +99,7 @@ const Home: React.FC = () => {
 
                 <ErrorAlert />
 
-                {result.Sucecss ?
+                {result.Sucess ?
                     (isLoading ? (<Loading />) :
                         (
                             <>
@@ -110,7 +118,7 @@ const Home: React.FC = () => {
                                     </FormControl>
                                     <SearchBar onSearch={handleSearch} />
                                 </Box>
-                                <TableArticles handleClick={handleClick} />
+                                <TableArticles isClickable={true}/>
                                 <Pagination
                                     count={Math.ceil(infoSearch.TotRows / infoSearch.RowForPage)}
                                     page={infoSearch.IndexPage + 1}
