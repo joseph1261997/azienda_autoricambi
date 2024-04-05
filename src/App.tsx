@@ -6,9 +6,9 @@ import DoveSiamo from "./pages/DoveSiamo"
 import Contatti from "./pages/Contatti"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import ArticleDetail from "./pages/ArticleDetail"
 import NotFound from "./pages/NotFound"
 import './styles/App.css'
+import ArticlesByPosition from "./pages/ArticlesByPosition"
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
           <Route path="/contatti" element={<Contatti />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path="/article-detail/:codice" element={<ArticleDetail />} />
+          <Route path="/articles-by-position/:codice" element={<ArticlesByPosition />} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
