@@ -63,10 +63,14 @@ export default function Register() {
             try {
                 const response = await api.get('/register', { params: { username, password, piva } });
 
-                if (response.status === 200) {
+                if (response.status === 200 && response.data.Result.Sucess === true) {
                     const user: User = { username, password }
                     dispatch(login(user));
                     navigate('/');
+                }
+                else if(response.status === 200 && response.data.Result.Sucess === false){
+                    console.log('response.data: ',response.data)
+                    setErrors({ errorRegister: `Errore in fase di registrazione: ${response.data.Result.Errors}`});
                 }
                 else {
                     setErrors({ errorRegister: `Errore in fase di registrazione: ${response.statusText}` });
