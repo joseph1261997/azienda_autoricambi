@@ -5,13 +5,18 @@ import storageSession from 'redux-persist/lib/storage/session';
 import authReducer from './authSlice';
 import productsReducer from './productsSlice';
 
-const persistConfig = {
-  key: 'root',
+const persistConfigProducts = {
+  key: 'products',
   storage: storageSession,
 }
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-const persistedProductsReducer = persistReducer(persistConfig, productsReducer);
+const persistConfingAuth = {
+  key: 'auth',
+  storage: storageSession,
+}
+
+const persistedAuthReducer = persistReducer(persistConfingAuth, authReducer);
+const persistedProductsReducer = persistReducer(persistConfigProducts, productsReducer);
 
 export const store = configureStore({
   reducer: {
