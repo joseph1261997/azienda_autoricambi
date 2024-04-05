@@ -56,8 +56,6 @@ export default function Register() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            console.log('errors: ', newErrors);
-
         } else {
             // Submit the form if all fields are valid
             try {
@@ -69,8 +67,8 @@ export default function Register() {
                     navigate('/');
                 }
                 else if(response.status === 200 && response.data.Result.Sucess === false){
-                    console.log('response.data: ',response.data)
                     setErrors({ errorRegister: `Errore in fase di registrazione: ${response.data.Result.Errors}`});
+                    formElement.reset();
                 }
                 else {
                     setErrors({ errorRegister: `Errore in fase di registrazione: ${response.statusText}` });

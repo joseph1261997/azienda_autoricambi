@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { selectInfoSearch, selectProductsData, selectSearchResult, setData, setInfoSearch, setResult } from "../redux/productsSlice";
+import { selectInfoSearch, selectSearchResult, setData, setInfoSearch, setResult } from "../redux/productsSlice";
 import api from "../utilities/api";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
@@ -12,7 +12,6 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import SearchBar from "../components/SearchBar";
 import TableArticles from "../components/TableArticles";
 import Pagination from "@mui/material/Pagination";
 
@@ -20,16 +19,15 @@ const ArticlesByPosition: React.FC = () => {
 
     const location = useLocation();
     const dispatch = useDispatch();
-    const result = useSelector(selectSearchResult);
-    const data = useSelector(selectProductsData);
-    const infoSearch = useSelector(selectInfoSearch);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [field, setField] = useState(location.state?.position);
+    const infoSearch = useSelector(selectInfoSearch);
+    const result = useSelector(selectSearchResult);
     const isMounted = useRef(false);
+    const field = location.state?.position;
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('sono dentro il fetch')
+
             try {
                 setIsLoading(true);
                 const response = await api.get(`/search-positions?field=${field}&indexPage=${infoSearch.IndexPage}&rowsForPage=${infoSearch.RowForPage}`);

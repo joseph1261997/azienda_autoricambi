@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setData, setResult, setInfoSearch, selectSearchResult, selectInfoSearch } from '../redux/productsSlice';
-import { Product } from "../utilities/types";
 import api from "../utilities/api";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -21,7 +19,6 @@ const Home: React.FC = () => {
 
     const result = useSelector(selectSearchResult);
     const infoSearch = useSelector(selectInfoSearch);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const isMounted = useRef(false);
     const [field, setField] = useState<string>("");
@@ -73,7 +70,6 @@ const Home: React.FC = () => {
 
     const handleSearch = (value: string) => {
         isMounted.current = false;
-        console.log("valore di isMounted.current: ",isMounted.current);
         setField(value);
         dispatch(setInfoSearch({ ...infoSearch, IndexPage: 0 }));
     };
