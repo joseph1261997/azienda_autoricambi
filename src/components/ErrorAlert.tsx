@@ -6,7 +6,7 @@ import { selectSearchResult } from '../redux/productsSlice';
 
 const ErrorAlert = () => {
     const result = useSelector(selectSearchResult);
-    return !result.Sucecss ? (
+    return !result.Sucess ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
