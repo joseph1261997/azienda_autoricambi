@@ -55,7 +55,7 @@ const ArticlesByPosition: React.FC = () => {
 
 
         const handleBeforeUnload = () => {
-            // Metti qui la logica da eseguire quando l'utente fa clic sul pulsante "Indietro"
+            // l'utente refresha la pagina
             isMounted.current = false;
         };
 
