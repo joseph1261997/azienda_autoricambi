@@ -4,7 +4,7 @@ import { InfoSearch, Product, ProductsState, SearchResult } from '../utilities/t
 
 const initialState: ProductsState = {
     data: [],
-    result: { Sucecss: true, Errors: [], Warnings: [], Infos: [] },
+    result: { Sucess: true, Errors: [], Warnings: [], Infos: [] },
     infoSearch: { TotRows: 0, IndexPage: 0, RowForPage: 10 },
 };
 
