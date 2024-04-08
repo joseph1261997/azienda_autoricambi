@@ -47,24 +47,16 @@ const ArticlesByPosition: React.FC = () => {
                 dispatch(setResult({ Sucess: false, Errors: ["Error occurred while fetching data"], Warnings: [], Infos: [] }));
             }
         };
-        if (!isMounted.current) {
+        if (!isMounted.current)
             fetchData();
-        }
 
         isMounted.current = true;
 
-
-        const handleBeforeUnload = () => {
-            // l'utente refresha la pagina
-            isMounted.current = false;
-        };
+        const handleBeforeUnload = () => isMounted.current = false;
 
         window.addEventListener('beforeunload', handleBeforeUnload);
 
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 
     }, [field, infoSearch.IndexPage, infoSearch.RowForPage]);
 
@@ -86,8 +78,6 @@ const ArticlesByPosition: React.FC = () => {
         <CssBaseline>
 
             <Container sx={{ display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "center", flex: 1, gap: 1, minHeight: 0 }}>
-
-                <ErrorAlert />
 
                 {result.Sucess ?
                     (isLoading ? (<Loading />) :
@@ -120,7 +110,7 @@ const ArticlesByPosition: React.FC = () => {
 
                             </>
                         )
-                    ) : null}
+                    ) : <ErrorAlert />}
 
             </Container>
 
