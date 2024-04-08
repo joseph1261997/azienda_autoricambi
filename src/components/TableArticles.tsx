@@ -55,7 +55,7 @@ const TableArticles: React.FC<{ isClickable: boolean }> = ({ isClickable }) => {
                             </TableCell>
                             <TableCell>{product.Riferimento}</TableCell>
                             <TableCell>{product.Codice}</TableCell>
-                            <TableCell>{product.Descrizione.trim()}</TableCell>
+                            <TableCell>{product.Descrizione}</TableCell>
                             <TableCell>€ {product.Listino}</TableCell>
                             <TableCell>€ {product.Netto}</TableCell>
                             <TableCell>{product.Esistenza}</TableCell>
