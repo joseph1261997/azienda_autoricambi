@@ -65,7 +65,7 @@ export default function Login() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', }} >
-                <Avatar sx={{ border: '1px solid', height: 100, width: 100, margin: 2 }} src='/favicon.ico' />
+                <Avatar sx={{ border: '1px solid', height: 100, width: 100, margin: 2 }} src='./logo.jpg' />
 
                 <Typography component="h1" variant="h5">Login</Typography>
 
