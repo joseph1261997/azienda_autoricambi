@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound"
 import './styles/App.css'
 import ArticlesByPosition from "./pages/ArticlesByPosition"
 
-function App() {
+export default function App() {
 
   return (
 
@@ -31,5 +31,3 @@ function App() {
 
   )
 }
-
-export default App
