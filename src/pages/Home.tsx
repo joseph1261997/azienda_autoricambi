@@ -30,7 +30,16 @@ const Home: React.FC = () => {
 
             try {
                 setIsLoading(true);
-                const response = await api.get(`/search-articles?field=${field}&indexPage=${infoSearch.IndexPage}&rowsForPage=${infoSearch.RowForPage}`);
+                const response = await api.get(
+                    `/search-articles`,
+                    {
+                        params: {
+                            field: field,
+                            indexPage: infoSearch.IndexPage,
+                            rowsForPage: infoSearch.RowForPage
+                        }
+                    }
+                );
                 const responseData = response.data;
                 dispatch(setResult(responseData.Result));
 
@@ -44,25 +53,25 @@ const Home: React.FC = () => {
             } catch (error) {
                 console.error("Error fetching data:", error);
                 setIsLoading(false);
-                dispatch(setResult({ Sucess: false, Errors: ["Error occurred while fetching data"], Warnings: [], Infos: [] }));
+                dispatch(setResult({
+                    Sucess: false,
+                    Errors: ["Error occurred while fetching data"],
+                    Warnings: [],
+                    Infos: []
+                }));
             }
         };
 
-        if (!isMounted.current) {
+        if (!isMounted.current)
             fetchData();
-        }
+
         isMounted.current = true;
 
-        const handleBeforeUnload = () => {
-            // Metti qui la logica da eseguire quando l'utente fa clic sul pulsante "Indietro"
-            isMounted.current = false;
-        };
+        const handleBeforeUnload = () => isMounted.current = false;
 
         window.addEventListener('beforeunload', handleBeforeUnload);
 
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 
     }, [field, infoSearch.IndexPage, infoSearch.RowForPage]);
 
@@ -81,24 +90,49 @@ const Home: React.FC = () => {
     const handleChangeRowsPerPage = (event: SelectChangeEvent<number>) => {
         isMounted.current = false;
         const rowforpage = event.target.value;
-        const firstProductIdx = (infoSearch.IndexPage) * infoSearch.RowForPage + 1; // Calcola l'indice del primo articolo visualizzato
-        const newPage = Math.floor(firstProductIdx / +rowforpage); // Calcola la nuova pagina in base al nuovo numero di articoli per pagina
+        const firstProductIdx = (infoSearch.IndexPage) * infoSearch.RowForPage + 1;
+        const newPage = Math.floor(firstProductIdx / +rowforpage);
         dispatch(setInfoSearch({ ...infoSearch, IndexPage: newPage, RowForPage: +rowforpage }));
     };
 
     return (
         <CssBaseline>
 
-            <Container sx={{ display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "center", flex: 1, gap: 1, minHeight: 0 }}>
-
-                <ErrorAlert />
+            <Container
+                sx={
+                    {
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "start",
+                        alignItems: "center",
+                        flex: 1,
+                        gap: 1,
+                        minHeight: 0
+                    }
+                }
+            >
 
                 {result.Sucess ?
                     (isLoading ? (<Loading />) :
                         (
                             <>
-                                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', alignItems: 'center', width: '100%' }}>
-                                    <InputLabel id="rows-for-page-select-autowidth-label" sx={{ mr: 1, display: { xs: 'none', sm: 'block' } }}>Articoli per pagina</InputLabel>
+                                <Box
+                                    sx={
+                                        {
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            justifyContent: 'start',
+                                            alignItems: 'center',
+                                            width: '100%'
+                                        }
+                                    }
+                                >
+                                    <InputLabel id="rows-for-page-select-autowidth-label"
+                                        sx={
+                                            {
+                                                mr: 1,
+                                                display: { xs: 'none', sm: 'block' }
+                                            }}>Articoli per pagina</InputLabel>
                                     <FormControl sx={{ mr: 'auto' }}>
                                         <Select
                                             labelId="rows-for-page-select-autowidth-label"
@@ -112,7 +146,7 @@ const Home: React.FC = () => {
                                     </FormControl>
                                     <SearchBar onSearch={handleSearch} />
                                 </Box>
-                                <TableArticles isClickable={true}/>
+                                <TableArticles isClickable={true} />
                                 <Pagination
                                     count={Math.ceil(infoSearch.TotRows / infoSearch.RowForPage)}
                                     page={infoSearch.IndexPage + 1}
@@ -125,7 +159,7 @@ const Home: React.FC = () => {
 
                             </>
                         )
-                    ) : null}
+                    ) : <ErrorAlert />}
 
             </Container>
 
