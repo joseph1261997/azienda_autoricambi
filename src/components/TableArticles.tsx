@@ -47,7 +47,10 @@ const TableArticles: React.FC<{ isClickable: boolean }> = ({ isClickable }) => {
                         <TableRow key={product.Codice} hover >
                             <TableCell>
                                 {isClickable ?
-                                    <Link underline="hover" component='button' color='black' onClick={() => handlePositionClick(product.Posizione)} >{product.Posizione}</Link>
+                                    <Link underline="hover" component='button' color='black'
+                                        onClick={() => handlePositionClick(product.Posizione)} >
+                                        {product.Posizione}
+                                    </Link>
                                     :
                                     product.Posizione
                                 }
