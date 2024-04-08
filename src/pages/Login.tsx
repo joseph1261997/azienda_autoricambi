@@ -45,7 +45,7 @@ export default function Login() {
             try {
                 const response = await api.get('/login', { params: { username, password } });
                 if (response.data !== 'bad credentials') {
-                    const user: User = { username, password }
+                    const user: User = { username: username.trim(), password: password.trim() }
                     dispatch(login(user));
                     navigate('/');
                 }
