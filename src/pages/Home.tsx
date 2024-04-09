@@ -132,7 +132,11 @@ const Home: React.FC = () => {
                                             {
                                                 mr: 1,
                                                 display: { xs: 'none', sm: 'block' }
-                                            }}>Articoli per pagina</InputLabel>
+                                            }
+                                        }
+                                    >
+                                        Articoli per pagina
+                                    </InputLabel>
                                     <FormControl sx={{ mr: 'auto' }}>
                                         <Select
                                             labelId="rows-for-page-select-autowidth-label"
