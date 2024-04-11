@@ -94,8 +94,11 @@ const Navbar: React.FC = () => {
 
                 <Box sx={{ ml: 'auto' }}> {/* Sposta a destra il pulsante di login */}
                     <Grid sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <Typography variant='h6' component='span' color='text.primary'> {user?.username} </Typography>
-                        {!isSmallScreen && (isLogged ? <LogoutButton isDrawer={false} /> :
+                        {!isSmallScreen && (isLogged ?
+                            <>
+                                <Typography variant='h6' component='span' color='text.primary'> {user?.username} </Typography>
+                                <LogoutButton isDrawer={false} />
+                            </> :
                             <>
                                 <Button variant="contained" color="primary" onClick={() => navigate('/login')} >Login</Button>
                                 <Button variant="contained" color="primary" onClick={() => navigate('/register')} >Registrati</Button>
